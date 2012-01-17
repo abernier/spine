@@ -1,5 +1,6 @@
 Spine ?= require('spine')
 $      = Spine.$
+require('spine/lib/tmpl')
 
 class Spine.List extends Spine.Controller
   events:
