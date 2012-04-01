@@ -283,7 +283,7 @@ class Model extends Module
     record
 
   updateAttribute: (name, value, options) ->
-    atts = {}
+    atts       = {}
     atts[name] = value
     @updateAttributes(atts, options)
 
