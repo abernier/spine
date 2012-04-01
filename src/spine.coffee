@@ -479,7 +479,7 @@ $ = window?.jQuery or window?.Zepto or (element) -> element
 unless typeof Object.create is 'function'
   Object.create = (o) ->
     Func = ->
-    Func.prototype = o
+    Func:: = o
     new Func()
 
 isArray = (value) ->
@@ -491,7 +491,7 @@ isBlank = (value) ->
   true
 
 makeArray = (args) ->
-  Array.prototype.slice.call(args, 0)
+  Array::slice.call(args, 0)
 
 # Globals
 
