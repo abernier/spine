@@ -1,3 +1,8 @@
+$ = jQuery = require('jQuery');
+
+require('coffee-script');
+Spine = require('../src/spine');
+
 describe("Model", function(){
   var Asset;
 

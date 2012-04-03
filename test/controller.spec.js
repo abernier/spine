@@ -1,3 +1,11 @@
+jsdom = require('jsdom').jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window   = document.createWindow();
+$ = jQuery = require('jQuery').create(window);
+
+require('coffee-script');
+Spine = require('../src/spine')
+
 describe("Controller", function(){
   var Users;
   var element;
@@ -88,6 +96,6 @@ describe("Controller", function(){
     });
 
     var users = new Users();
-    expect(users.el.attr("style")).toEqual("width: 100%");
+    expect(users.el.attr("style")).toEqual("width: 100%;");
   });
 });

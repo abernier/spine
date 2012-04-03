@@ -1,3 +1,9 @@
+localStorage = require('localStorage');
+
+require('coffee-script');
+Spine = require('../src/spine')
+require('../src/local');
+
 describe("Model.Local", function(){
   var User;
 

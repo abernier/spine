@@ -1,3 +1,12 @@
+jsdom = require('jsdom').jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window   = document.createWindow();
+$ = jQuery = require('jQuery').create(window);
+
+require('coffee-script');
+Spine = require('../src/spine');
+require('../src/route')
+
 describe("Routing", function(){
   var Route = Spine.Route;
   var spy;

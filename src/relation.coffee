@@ -1,4 +1,4 @@
-Spine   = @Spine or require('spine')
+Spine  ?= require('spine')
 isArray = Spine.isArray
 require = @require or ((value) -> eval(value))
 

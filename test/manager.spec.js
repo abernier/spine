@@ -1,4 +1,13 @@
-describe("Ajax", function(){
+jsdom = require('jsdom').jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window   = document.createWindow();
+$ = jQuery = require('jQuery').create(window);
+
+require('coffee-script');
+Spine = require('../src/spine');
+require('../src/manager');
+
+describe("Manager", function(){
   var Users;
   var Groups;
   var users;

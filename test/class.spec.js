@@ -1,3 +1,6 @@
+require('coffee-script');
+Spine = require('../src/spine')
+
 describe("Class", function(){
   var User;
 

@@ -12,5 +12,12 @@
     "type" : "git", 
     "url": "http://github.com/maccman/spine.git"
   }, 
-  "main" : "./index.js"
+  "main" : "./index.js",
+  "devDependencies": {
+    "coffee-script": "~1.2.0",
+    "jasmine-node": "~1.0.22",
+    "jQuery": "latest",
+    "jsdom": "latest",
+    "localStorage": "latest"
+  }
 }

@@ -1,3 +1,7 @@
+require('coffee-script');
+Spine = require('../src/spine')
+require('../src/relation');
+
 describe("Model.Relation", function(){
   var Album;
   var Photo;
