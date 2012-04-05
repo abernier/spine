@@ -1,7 +1,7 @@
 should = require 'should'
 sinon =  require 'sinon'
 
-Spine = require '../src/spine'
+require './env'
 
 describe 'Class', ->
   User = undefined
