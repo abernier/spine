@@ -19,7 +19,8 @@
     "should": "0.6.x",
     "sinon": "1.3.x",
     "jQuery": "latest",
-    "jsdom": "latest"
+    "jsdom": "latest",
+    "localStorage": "latest"
   },
   "scripts": {
     "test": "mocha"
