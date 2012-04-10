@@ -42,3 +42,22 @@ describe "Model.Local", ->
     User.refresh([{name: "Bob", id: 1}])
 
     User.idCounter.should.equal 2
+
+
+  it "should work with non string IDs", ->
+    User.refresh([{name: "Bob", id: "b"}])
+    User.idCounter.should.equal 0
+
+
+  it "should work with cIDs", ->
+    User.refresh([
+      {name: "Bob", id: "c-1"}
+      {name: "Bob", id: "c-3"}
+      {name: "Bob", id: "c-2"}
+    ])
+    User.idCounter.should.equal 4
+
+
+  it "should work with a blank refresh", ->
+    User.refresh([])
+    User.idCounter.equal 0
