@@ -1,10 +1,28 @@
 should = require 'should'
 sinon =  require 'sinon'
-
-require './env'
-require '../src/relation'
+zombie = require 'zombie'
 
 describe "Model.Relation", ->
+  $ = jQuery = undefined
+
+  before (done) ->
+    browser = new zombie.Browser()
+
+    browser.visit("file://localhost#{__dirname}/index.html", ->
+      global.document      ?= browser.document
+      global.window        ?= browser.window
+      global.window.jQuery ?= require('jQuery').create(window)
+
+      global.Spine ?= require '../src/spine'
+      require '../src/relation'
+      $ = jQuery = Spine.$
+
+      done()
+    )
+
+  after ->
+    delete global[key] for key in ['document', 'window', 'Spine']
+
   Album = undefined
   Photo = undefined
 
@@ -71,6 +89,3 @@ describe "Model.Relation", ->
     album.photos().all().should.length 2
     album.photos().first().name.should.equal "Beautiful photo 1"
     album.photos().last().name.should.equal "Beautiful photo 2"
-
-
-  

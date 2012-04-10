@@ -1,12 +1,28 @@
 should = require 'should'
-sinon =  require 'sinon'
-
-require './env'
-require '../src/ajax'
-
-$ = jQuery = Spine.$
+sinon  = require 'sinon'
+zombie = require 'zombie'
 
 describe "Ajax", ->
+  $ = jQuery = undefined
+
+  before (done) ->
+    browser = new zombie.Browser()
+
+    browser.visit("file://localhost#{__dirname}/index.html", ->
+      global.document      ?= browser.document
+      global.window        ?= browser.window
+      global.window.jQuery ?= require('jQuery').create(window)
+
+      global.Spine ?= require '../src/spine'
+      require '../src/ajax'
+      $ = jQuery = Spine.$
+
+      done()
+    )
+
+  after ->
+    delete global[key] for key in ['document', 'window', 'Spine']
+
   User     = undefined
   jqXHR    = undefined
   stub     = undefined
@@ -31,9 +47,9 @@ describe "Ajax", ->
       error: jqXHR.fail
       complete: jqXHR.done
     })
-    
+
     stub = sinon.stub(jQuery, "ajax").returns(jqXHR)
-  
+
   afterEach ->
     stub.restore()
 
@@ -165,7 +181,7 @@ describe "Ajax", ->
   it "can cancel ajax on change", ->
     User.create({first: "Second"}, {ajax: false})
     jqXHR.resolve()
-    
+
     stub.should.not.be.called
 
 

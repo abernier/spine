@@ -1,11 +1,28 @@
 should = require 'should'
 sinon =  require 'sinon'
-
-require './env'
-
-require '../src/manager'
+zombie = require 'zombie'
 
 describe "Manager", ->
+  $ = jQuery = undefined
+
+  before (done) ->
+    browser = new zombie.Browser()
+
+    browser.visit("file://localhost#{__dirname}/index.html", ->
+      global.document      ?= browser.document
+      global.window        ?= browser.window
+      global.window.jQuery ?= require('jQuery').create(window)
+
+      global.Spine ?= require '../src/spine'
+      require '../src/manager'
+      $ = jQuery = Spine.$
+
+      done()
+    )
+
+  after ->
+    delete global[key] for key in ['document', 'window', 'Spine']
+
   Users  = undefined
   Groups = undefined
   users  = undefined

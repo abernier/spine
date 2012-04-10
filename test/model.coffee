@@ -1,11 +1,27 @@
 should = require 'should'
 sinon =  require 'sinon'
-
-require './env'
-
-$ = Spine.$
+zombie = require 'zombie'
 
 describe "Model", ->
+  $ = jQuery = undefined
+
+  before (done) ->
+    browser = new zombie.Browser()
+
+    browser.visit("file://localhost#{__dirname}/index.html", ->
+      global.document      ?= browser.document
+      global.window        ?= browser.window
+      global.window.jQuery ?= require('jQuery').create(window)
+
+      global.Spine ?= require '../src/spine'
+      $ = jQuery = Spine.$
+
+      done()
+    )
+
+  after ->
+    delete global[key] for key in ['document', 'window', 'Spine']
+
   Asset = undefined
 
   beforeEach ->
@@ -38,7 +54,7 @@ describe "Model", ->
 
   it "can find records", ->
     asset = Asset.create({name: "test.pdf"})
-    
+
     Asset.find(asset.id).should.eql asset
     asset.destroy()
     (-> Asset.find(asset.id)).should.throw()
@@ -84,7 +100,7 @@ describe "Model", ->
     asset2 = Asset.create({name: "foo.pdf"})
 
     all = Asset.all()
-    
+
     all[0].__proto__.should.equal asset1.__proto__
     all[1].__proto__.should.equal asset2.__proto__
     all.should.length 2
@@ -146,7 +162,7 @@ describe "Model", ->
     form = $('<form/>')
     form.append('<input name="name" value="bar"/>')
     asset = Asset.fromForm(form)
-    
+
     asset.name.should.equal "bar"
 
 
@@ -181,7 +197,7 @@ describe "Model", ->
   it "can load attributes()", ->
     asset = new Asset()
     result = asset.load({name: "In da' house"})
-    
+
     result.should.equal asset
     asset.name.should.equal "In da' house"
 
@@ -207,13 +223,13 @@ describe "Model", ->
 
   it "can generate ID", ->
     asset = Asset.create({name: "who's in the house?"})
-    
+
     asset.id.should.be.ok
 
 
   it "can be duplicated", ->
     asset = Asset.create({name: "who's your daddy?"})
-    
+
     asset.dup().__proto__.should.equal Asset.prototype
 
     asset.name.should.equal "who's your daddy?"
@@ -225,7 +241,7 @@ describe "Model", ->
 
   it "can be cloned", ->
     asset = Asset.create({name: "what's cooler than cool?"}).dup(false)
-    
+
     asset.clone().__proto__.should.not.equal Asset.prototype
     asset.clone().__proto__.__proto__.should.equal Asset.prototype
 
@@ -266,7 +282,7 @@ describe "Model", ->
   it "dup should take a newRecord argument, which controls if a new record is returned", ->
     asset = Asset.create({name: "hotel california"})
 
-    
+
     should.not.exist asset.dup().id
     asset.dup().isNew().should.be.ok
 
@@ -346,7 +362,7 @@ describe "Model", ->
       Asset.bind("destroy", spy)
       asset = Asset.create({name: "cartoon world.png"})
       asset.destroy()
-      
+
       spy.calledWith(asset, {}).should.be.true
 
 
@@ -354,7 +370,7 @@ describe "Model", ->
       asset = Asset.create({name: "cartoon world.png"})
       asset.bind("save", spy)
       asset.save()
-      
+
       spy.calledWith(asset, {}).should.be.true
 
 
@@ -423,7 +439,7 @@ describe "Model", ->
       asset.bind("save", spy)
       asset.destroy()
       asset.trigger("save", asset)
-      
+
       spy.should.not.be.called
 
 
@@ -435,6 +451,3 @@ describe "Model", ->
       asset = Asset.find("foo")
       asset.trigger("test", asset)
       spy.should.be.called
-
-
-    
