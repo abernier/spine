@@ -1,5 +1,5 @@
 should = require 'should'
-sinon =  require 'sinon'
+sinon  =  require 'sinon'
 zombie = require 'zombie'
 
 describe 'Class', ->
