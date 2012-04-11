@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/abernier/spine.png)](http://travis-ci.org/abernier/spine)
+[![Build Status](https://secure.travis-ci.org/abernier/spine.png?branch=mocha)](http://travis-ci.org/abernier/spine)
 
 # Spine
 
