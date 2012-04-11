@@ -60,4 +60,4 @@ describe "Model.Local", ->
 
   it "should work with a blank refresh", ->
     User.refresh([])
-    User.idCounter.equal 0
+    User.idCounter.should.equal 0
