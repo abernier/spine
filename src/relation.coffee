@@ -1,4 +1,4 @@
-Spine   ?= require('spine')
+Spine  = (global or window).Spine or require('spine')
 isArray = Spine.isArray
 require = @require or ((value) -> eval(value))
 
