@@ -59,3 +59,58 @@ describe "Events", ->
     EventTest.trigger("yoyo", 5, 10)
 
     spy.calledWith(5, 10).should.be.true
+
+
+  it "can unbind events", ->
+    EventTest.bind("daddyo", spy)
+    EventTest.unbind("daddyo")
+    EventTest.trigger("daddyo")
+
+    spy.should.not.be.called
+
+
+  it "can bind to a single event", ->
+    EventTest.one("indahouse", spy)
+    EventTest.trigger("indahouse")
+    spy.should.be.called
+
+    spy.reset()
+    EventTest.trigger("indahouse")
+    spy.should.not.be.called
+
+
+  it "should allow a callback unbind itself", ->
+    a = sinon.spy()
+    b = sinon.spy({unbindItself: -> EventTest.unbind("once", b)}, "unbindItself")
+    c = sinon.spy()
+
+    EventTest.bind("once", a)
+    EventTest.bind("once", b)
+    EventTest.bind("once", c)
+
+    EventTest.trigger("once")
+
+    a.should.be.called
+    b.should.be.called
+    c.should.be.called
+
+    EventTest.trigger("once")
+
+    a.calledTwice.should.be.true
+    b.calledOnce.should.be.true
+    c.calledTwice.should.be.true
+
+
+  it "can cancel propogation", ->
+    EventTest.bind("motherio", -> false)
+    EventTest.bind("motherio", spy)
+
+    EventTest.trigger("motherio")
+    spy.should.not.be.called
+
+
+  it "should clear events on inherited objects", ->
+    EventTest.bind("yoyo", spy)
+    Sub = EventTest.sub()
+    Sub.trigger("yoyo")
+    spy.should.not.be.called

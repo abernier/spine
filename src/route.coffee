@@ -1,5 +1,5 @@
 Spine  = (global or window).Spine or require('spine')
-$      = Spine.$
+$     = Spine.$
 
 hashStrip    = /^#*/
 namedParam   = /:([\w\d]+)/g

@@ -323,7 +323,7 @@ describe "Model", ->
       spy = sinon.spy(noop, "spy")
 
 
-    it "can interate over records", ->
+    it "can iterate over records", ->
       asset1 = Asset.create({name: "test.pdf"})
       asset2 = Asset.create({name: "foo.pdf"})
 
@@ -404,6 +404,19 @@ describe "Model", ->
       asset.save()
 
       spy.should.be.called
+      spy.reset()
+
+      asset.save()
+      spy.should.not.be.called
+
+
+    it "should be able to bind once on instance", ->
+      asset = Asset.create({name: "cartoon world.png"})
+
+      asset.one("save", spy)
+      asset.save()
+
+      spy.calledWith(asset, {}).should.be.true
       spy.reset()
 
       asset.save()
