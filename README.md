@@ -1,4 +1,4 @@
-# Spine
+#Spine
 
 [![Build Status](https://secure.travis-ci.org/maccman/spine.png?branch=master)](http://travis-ci.org/maccman/spine)
 
