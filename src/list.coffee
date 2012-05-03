@@ -1,4 +1,4 @@
-Spine  = (global or window).Spine or require('spine')
+Spine  = do -> @Spine or require('spine')
 $      = Spine.$
 
 class Spine.List extends Spine.Controller
