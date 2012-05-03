@@ -11,11 +11,11 @@ describe "Routing", ->
     browser = new zombie.Browser()
 
     browser.visit("file://localhost#{__dirname}/index.html", ->
-      global.document      ?= browser.document
-      global.window        ?= browser.window
-      global.window.jQuery ?= require('jQuery').create(window)
+      global.document = browser.document
+      global.window   = browser.window
+      global.jQuery   = require('jQuery').create(window)
+      global.Spine    = require '../src/spine'
 
-      global.Spine ?= require '../src/spine'
       require '../src/route'
       Route = Spine.Route
       $ = Spine.$
@@ -24,7 +24,7 @@ describe "Routing", ->
     )
 
   after ->
-    delete global[key] for key in ['document', 'window', 'Spine']
+    delete global[key] for key in ['document', 'window', 'jQuery', 'Spine']
 
   spy      = undefined
   clock    = undefined
@@ -39,7 +39,7 @@ describe "Routing", ->
 
   beforeEach ->
     Route.setup()
-    
+
     noop = {spy: ->}
     spy = sinon.spy(noop, "spy")
 

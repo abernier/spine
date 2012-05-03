@@ -9,12 +9,12 @@ describe "Model.Local", ->
     browser = new zombie.Browser()
 
     browser.visit("file://localhost#{__dirname}/index.html", ->
-      global.document      ?= browser.document
-      global.window        ?= browser.window
-      global.window.jQuery ?= require('jQuery').create(window)
-      global.localStorage  ?= browser.localStorage('test')
+      global.document     = browser.document
+      global.window       = browser.window
+      global.localStorage = browser.localStorage('test')
+      global.jQuery       = require('jQuery').create(window)
+      global.Spine        = require '../src/spine'
 
-      global.Spine ?= require '../src/spine'
       require '../src/local'
       $ = jQuery = Spine.$
 
@@ -22,7 +22,7 @@ describe "Model.Local", ->
     )
 
   after ->
-    delete global[key] for key in ['document', 'window', 'localStorage', 'Spine']
+    delete global[key] for key in ['document', 'window', 'localStorage', 'jQuery', 'Spine']
 
   User = undefined
 

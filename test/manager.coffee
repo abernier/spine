@@ -9,11 +9,11 @@ describe "Manager", ->
     browser = new zombie.Browser()
 
     browser.visit("file://localhost#{__dirname}/index.html", ->
-      global.document      ?= browser.document
-      global.window        ?= browser.window
-      global.window.jQuery ?= require('jQuery').create(window)
+      global.document = browser.document
+      global.window   = browser.window
+      global.jQuery   = require('jQuery').create(window)
+      global.Spine    = require '../src/spine'
 
-      global.Spine ?= require '../src/spine'
       require '../src/manager'
       $ = jQuery = Spine.$
 
@@ -21,7 +21,7 @@ describe "Manager", ->
     )
 
   after ->
-    delete global[key] for key in ['document', 'window', 'Spine']
+    delete global[key] for key in ['document', 'window', 'jQuery', 'Spine']
 
   Users  = undefined
   Groups = undefined
