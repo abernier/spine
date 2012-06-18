@@ -88,9 +88,7 @@ class Spine.Route extends Spine.Module
     path
 
   @getHost: ->
-    host  = "#{window.location.protocol}//#{window.location.hostname}"
-    host += ":#{window.location.port}" if window.location.port?
-    host
+    "#{window.location.protocol}//#{window.location.host}"
 
   @change: ->
     path = @getPath()
