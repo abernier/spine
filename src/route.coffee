@@ -79,20 +79,21 @@ class Spine.Route extends Spine.Module
   # Private
 
   @getPath: ->
-    path = window.location.pathname
-    if path.substr(0,1) isnt '/'
-      path = '/' + path
+    if @history
+      path = window.location.pathname
+      path = '/' + path if path.substr(0,1) isnt '/'
+    else
+      path = window.location.hash
+      path = path.replace(hashStrip, '')
     path
 
-  @getHash: -> window.location.hash
-
-  @getFragment: -> @getHash().replace(hashStrip, '')
-
   @getHost: ->
-    (document.location + '').replace(@getPath() + @getHash(), '')
+    host  = "#{window.location.protocol}//#{window.location.hostname}"
+    host += ":#{window.location.port}" if window.location.port?
+    host
 
   @change: ->
-    path = if @getFragment() isnt '' then @getFragment() else @getPath()
+    path = @getPath()
     return if path is @path
     @path = path
     @matchRoute(@path)
