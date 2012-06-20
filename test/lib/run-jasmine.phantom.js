@@ -61,7 +61,7 @@ page.open(system.args[1], function(status){
                 return false;
             });
         }, function(){
-            page.evaluate(function(){
+            var passed = page.evaluate(function(){
                 console.log(document.body.querySelector('.description').innerText);
                 list = document.body.querySelectorAll('div.jasmine_reporter > div.suite.failed');
                 for (i = 0; i < list.length; ++i) {
@@ -72,8 +72,10 @@ page.open(system.args[1], function(status){
                         console.log(desc[j].innerText);
                     }
                 }
+                return list.length === 0;
             });
-            phantom.exit();
+
+            phantom.exit(passed ? 0 : 1);
         });
     }
 });
