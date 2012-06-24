@@ -10,15 +10,15 @@ build: $(js)
 $(js): $(lib)
 
 $(lib):
-	mkdir -p $@
+	@mkdir -p $@
 
 $(lib)/%.js: $(src)/%.coffee
-	coffee --compile --print $< > $@
+	@coffee --compile --print $< > $@
 
-.PHONY: test
-test: $(js)
+.PHONY: $(test)
+$(test): $(js)
 	@$(MAKE) -C $@
 
 .PHONY: clean
 clean:
-	rm -Rf $(lib)
+	@rm -Rf $(lib)

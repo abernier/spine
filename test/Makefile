@@ -6,6 +6,6 @@ html = $(wildcard *.html)
 all: $(html)
 
 %.html: FORCE
-	phantomjs $(runner) file://$(CURDIR)/$@
+	@phantomjs $(runner) file://$(CURDIR)/$@
 
 FORCE:
