@@ -23,6 +23,8 @@
   },
   "scripts": {
     "build": "make",
-    "test": "make test"
+    "test": "make test",
+    "publish": "make publish",
+    "clean": "make clean"
   }
 }
