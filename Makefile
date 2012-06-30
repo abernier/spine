@@ -3,12 +3,8 @@ js = $(patsubst %.coffee,%.js,$(addprefix lib/,$(notdir $(wildcard src/*.coffee)
 .PHONY: build
 build: $(js)
 
-$(js): lib
-
-lib:
-	mkdir -p $@
-
 lib/%.js: src/%.coffee
+	@test -d $(@D) || mkdir $(@D)
 	coffee --compile --print $< > $@
 
 .PHONY: test
