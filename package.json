@@ -19,7 +19,7 @@
   "scripts": {
     "build": "make",
     "test": "make test-run",
-    "publish": "make publish",
-    "clean": "make clean"
+    "prepublish": "make test-run",
+    "postpublish": "make post-publish"
   }
 }
