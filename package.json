@@ -20,6 +20,6 @@
     "build": "make",
     "test": "make test-run",
     "prepublish": "make test-run",
-    "postpublish": "make post-publish"
+    "postpublish": "make postpublish"
   }
 }
