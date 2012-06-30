@@ -16,14 +16,9 @@
     "coffee-script": "1.3.x"
   },
   "main": "./index.js",
-  "directories": {
-    "src": "src",
-    "lib": "lib",
-    "test": "test"
-  },
   "scripts": {
     "build": "make",
-    "test": "make test",
+    "test": "make test-run",
     "publish": "make publish",
     "clean": "make clean"
   }
