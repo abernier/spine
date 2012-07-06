@@ -19,7 +19,6 @@
   "scripts": {
     "build": "make",
     "test": "make test-run",
-    "prepublish": "make test-run",
-    "postpublish": "make postpublish"
+    "prepublish": "make test-run"
   }
 }

@@ -15,10 +15,6 @@ test: build
 test-run: test
 	$(MAKE) -C test run
 
-.PHONY: postpublish
-postpublish:
-	git tag -s v${npm_package_version} -m 'Release ${npm_package_version}.'
-
 .PHONY: clean
 clean:
 	rm -Rf lib
