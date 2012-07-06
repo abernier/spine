@@ -28,7 +28,7 @@ class Spine.Route extends Spine.Module
     @options = $.extend({}, @options, options)
 
     if (@options.history)
-      @history = @historySupport && @options.history
+      @history = @historySupport and @options.history
 
     return if @options.shim
 
@@ -68,11 +68,7 @@ class Spine.Route extends Spine.Module
     return if options.shim
 
     if @history
-      history.pushState(
-        {},
-        document.title,
-        @path
-      )
+      history.pushState({}, document.title, @path)
     else
       window.location.hash = @path
 
@@ -80,16 +76,14 @@ class Spine.Route extends Spine.Module
 
   @getPath: ->
     path = window.location.pathname
-    if path.substr(0,1) isnt '/'
-      path = '/' + path
+    path = "/#{path}" if path.substr(0, 1) isnt '/'
     path
 
   @getHash: -> window.location.hash
 
   @getFragment: -> @getHash().replace(hashStrip, '')
 
-  @getHost: ->
-    (document.location + '').replace(@getPath() + @getHash(), '')
+  @getHost: -> "#{document.location}".replace("#{@getPath()}#{@getHash()}", '')
 
   @change: ->
     path = if @getFragment() isnt '' then @getFragment() else @getPath()
@@ -98,28 +92,25 @@ class Spine.Route extends Spine.Module
     @matchRoute(@path)
 
   @matchRoute: (path, options) ->
-    for route in @routes
-      if route.match(path, options)
-        @trigger('change', route, path)
-        return route
+    for route in @routes when route.match(path, options)
+      @trigger('change', route, path)
+      return route
 
   constructor: (@path, @callback) ->
     @names = []
 
     if typeof path is 'string'
       namedParam.lastIndex = 0
-      while (match = namedParam.exec(path)) != null
-        @names.push(match[1])
+      @names.push(match[1]) until match = namedParam.exec(path) is null
 
       splatParam.lastIndex = 0
-      while (match = splatParam.exec(path)) != null
-        @names.push(match[1])
+      @names.push(match[1]) until match = splatParam.exec(path) is null
 
       path = path.replace(escapeRegExp, '\\$&')
                  .replace(namedParam, '([^\/]*)')
                  .replace(splatParam, '(.*?)')
 
-      @route = new RegExp('^' + path + '$')
+      @route = new RegExp("^#{path}$")
     else
       @route = path
 
@@ -127,11 +118,9 @@ class Spine.Route extends Spine.Module
     match = @route.exec(path)
     return false unless match
     options.match = match
-    params = match.slice(1)
-
+    params = match[1..]
     if @names.length
-      for param, i in params
-        options[@names[i]] = param
+      options[@names[i]] = param for param, i in params
 
     @callback.call(null, options) isnt false
 
